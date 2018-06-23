@@ -9,6 +9,7 @@ public class GameOverPopUp : MonoBehaviour {
     void OnEnable()
     {
         gameOverScore.text = Managers.Score.currentScore.ToString();
+        GameController.isGameOverUiActive = true; // Gameover panel is enabled
         Managers.UI.panel.SetActive(true);
     }
 
@@ -18,6 +19,7 @@ public class GameOverPopUp : MonoBehaviour {
         Managers.Audio.PlayUIClick();
         Managers.UI.panel.SetActive(false);
         Managers.Game.SetState(typeof(MenuState));
+        GameController.isGameOverUiActive = false; // Gameover panel is disabled
         gameObject.SetActive(false);
     }
 }

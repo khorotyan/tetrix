@@ -71,17 +71,19 @@ public class UIManager : MonoBehaviour {
 
     private void HideIfClickedOutside(GameObject outsidePanel)
     {
-        if (Input.GetMouseButton(0) && outsidePanel.activeSelf &&
-            !RectTransformUtility.RectangleContainsScreenPoint(
-                outsidePanel.GetComponent<RectTransform>(),
-                Input.mousePosition,
-                Camera.main))
+        if (GameController.isGameOverUiActive == false)
         {
-            outsidePanel.SetActive(false);
-            outsidePanel.transform.parent.gameObject.SetActive(false);
-            Managers.UI.panel.SetActive(false);
-            activePopUp = null;
-        }
+            if (Input.GetMouseButton(0) && outsidePanel.activeSelf &&
+                        !RectTransformUtility.RectangleContainsScreenPoint(
+                            outsidePanel.GetComponent<RectTransform>(),
+                            Input.mousePosition,
+                            Camera.main))
+            {
+                outsidePanel.SetActive(false);
+                outsidePanel.transform.parent.gameObject.SetActive(false);
+                Managers.UI.panel.SetActive(false);
+                activePopUp = null;
+            }
+        } 
     }
-
 }
