@@ -17,8 +17,14 @@ public class GameOverState : _StatesBase {
 
 	public override void OnDeactivate ()
     {
-        Managers.Adv.ShowRewardedAd();
-        //Debug.Log ("<color=red>Game Over State</color> OnDeactivate");
+        // Reset game score
+        Managers.Score.ResetScore();
+
+        // Count the number of user fails
+        GameController.NumberOfFails++;
+
+        if (GameController.NumberOfFails % 3 == 0)
+            Managers.Adv.ShowRewardedAd();
 	}
 
 	public override void OnUpdate ()
