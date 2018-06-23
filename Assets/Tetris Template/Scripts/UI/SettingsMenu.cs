@@ -1,15 +1,4 @@
-﻿//  /*********************************************************************************
-//   *********************************************************************************
-//   *********************************************************************************
-//   * Produced by Skard Games										                  *
-//   * Facebook: https://goo.gl/5YSrKw											      *
-//   * Contact me: https://goo.gl/y5awt4								              *											
-//   * Developed by Cavit Baturalp Gürdin: https://tr.linkedin.com/in/baturalpgurdin *
-//   *********************************************************************************
-//   *********************************************************************************
-//   *********************************************************************************/
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -44,7 +33,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void OpenContact()
     {
-        Application.OpenURL(Constants.CONTACT_URL);
+        //Application.OpenURL(Constants.CONTACT_URL);
     }
 
     public void RateAsset()

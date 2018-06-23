@@ -1,15 +1,4 @@
-﻿//  /*********************************************************************************
-//   *********************************************************************************
-//   *********************************************************************************
-//   * Produced by Skard Games										                  *
-//   * Facebook: https://goo.gl/5YSrKw											      *
-//   * Contact me: https://goo.gl/y5awt4								              *											
-//   * Developed by Cavit Baturalp Gürdin: https://tr.linkedin.com/in/baturalpgurdin *
-//   *********************************************************************************
-//   *********************************************************************************
-//   *********************************************************************************/
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public enum InputMethod
@@ -26,7 +15,8 @@ public class PlayerInputManager : MonoBehaviour
 
     void Awake()
     {
-
+        if (Application.platform == RuntimePlatform.Android)
+            inputType = InputMethod.TouchInput;
     }
 
     void Update()
@@ -95,18 +85,18 @@ public class PlayerInputManager : MonoBehaviour
                 _currentSwipe.Normalize();
 
                 //swipe left
-                if (_currentSwipe.x < 0 && _currentSwipe.y > -0.5f && _currentSwipe.y < 0.5f)
+                if (_currentSwipe.x < 0 && _currentSwipe.y > -0.45f && _currentSwipe.y < 0.45f)
                 {
                     Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.left);
                 }
                 //swipe right
-                if (_currentSwipe.x > 0 && _currentSwipe.y > -0.5f && _currentSwipe.y < 0.5f)
+                if (_currentSwipe.x > 0 && _currentSwipe.y > -0.45f && _currentSwipe.y < 0.45f)
                 {
                     Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.right);
                 }
 
                 //swipe down
-                if (_currentSwipe.y < 0 && _currentSwipe.x > -0.5f && _currentSwipe.x < 0.5f)
+                if (_currentSwipe.y < 0 && _currentSwipe.x > -0.85f && _currentSwipe.x < 0.85f)
                 {
                     if (Managers.Game.currentShape != null)
                     {
