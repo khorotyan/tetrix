@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
 
     public static int NumberOfFails = 0;
     public static bool isGameOverUiActive = false;
+    public static bool clearRowsAdWatched = false;
 
     private void Awake()
     {
@@ -91,12 +92,15 @@ public class GameController : MonoBehaviour
     // Show the ad watch panel
     public static IEnumerator ShowAdPanel()
     {
-        yield return new WaitForSeconds(0.15f);
-        adWatchPanel.SetActive(true);
-        Color32 buttonColor = new Color32(255, 255, 255, 200);
-        Color32 textColor = new Color32(209, 188, 83, 255);
-        adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.5f);
-        adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.5f);
+        if (clearRowsAdWatched == false)
+        {
+            yield return new WaitForSeconds(0.15f);
+            adWatchPanel.SetActive(true);
+            Color32 buttonColor = new Color32(255, 255, 255, 200);
+            Color32 textColor = new Color32(209, 188, 83, 255);
+            adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.5f);
+            adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.5f);
+        }
     }
 
     // Close the ad watch panel
@@ -116,6 +120,8 @@ public class GameController : MonoBehaviour
 
     public IEnumerator OnRewardAdFinish()
     {
+        clearRowsAdWatched = true;
+
         // Continue the game
         Managers.Game.SetState(typeof(GamePlayState));
         CloseAdWatchPanel();
@@ -123,5 +129,15 @@ public class GameController : MonoBehaviour
 
         // Clear the bottom 3 lines
         StartCoroutine(ClearLines());
+    }
+
+    public static void OnGameRestartClick()
+    {
+        clearRowsAdWatched = false;
+    }
+
+    public static void OnHomeScreenClick()
+    {
+        clearRowsAdWatched = false;
     }
 }

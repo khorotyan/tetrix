@@ -21,5 +21,6 @@ public class GameOverPopUp : MonoBehaviour {
         Managers.Game.SetState(typeof(MenuState));
         GameController.isGameOverUiActive = false; // Gameover panel is disabled
         gameObject.SetActive(false);
+        GameController.OnHomeScreenClick();
     }
 }
