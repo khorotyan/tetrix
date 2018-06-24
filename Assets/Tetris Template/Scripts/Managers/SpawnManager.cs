@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour {
    		 int i = Random.Range(0, shapeTypes.Length);
 
 		// Spawn Group at current Position
-		GameObject temp =Instantiate(shapeTypes[i]) ;
+		GameObject temp = Instantiate(shapeTypes[i]) ;
         Managers.Game.currentShape = temp.GetComponent<TetrisShape>();
         temp.transform.parent = Managers.Game.blockHolder;
         Managers.Input.isActive = true;

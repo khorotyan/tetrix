@@ -7,6 +7,8 @@ using System.Collections;
 
 public class AdvertisementManager : MonoBehaviour
 {
+    public GameController controller;
+
 	public void ShowDefaultAd()
 	{
 		#if UNITY_ADS
@@ -42,6 +44,7 @@ public class AdvertisementManager : MonoBehaviour
 		{
 			case ShowResult.Finished:
 				Debug.Log("The ad was successfully shown.");
+                StartCoroutine(controller.OnRewardAdFinish());
 				break;
 			case ShowResult.Skipped:
 				Debug.Log("The ad was skipped before reaching the end.");

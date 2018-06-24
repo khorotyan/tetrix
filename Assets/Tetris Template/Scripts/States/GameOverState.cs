@@ -23,8 +23,8 @@ public class GameOverState : _StatesBase {
         // Count the number of user fails
         GameController.NumberOfFails++;
 
-        if (GameController.NumberOfFails % 3 == 0)
-            Managers.Adv.ShowRewardedAd();
+        if (GameController.NumberOfFails % 5 == 0)
+            Managers.Adv.ShowDefaultAd();
 	}
 
 	public override void OnUpdate ()

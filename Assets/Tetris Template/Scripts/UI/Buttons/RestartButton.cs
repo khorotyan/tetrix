@@ -12,5 +12,6 @@ public class RestartButton : MonoBehaviour {
         Managers.Game.SetState(typeof(GamePlayState));
         GameController.isGameOverUiActive = false; // Gameover panel is disabled
         Managers.UI.inGameUI.gameOverPopUp.SetActive(false);
+        GameController.CloseAdWatchPanel();
     }
 }
