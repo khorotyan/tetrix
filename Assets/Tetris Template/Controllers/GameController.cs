@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -90,14 +91,20 @@ public class GameController : MonoBehaviour
     // Show the ad watch panel
     public static IEnumerator ShowAdPanel()
     {
-        yield return new WaitForSeconds(1.3f);
-        adWatchPanel.SetActive(true); 
+        yield return new WaitForSeconds(0.15f);
+        adWatchPanel.SetActive(true);
+        Color32 buttonColor = new Color32(255, 255, 255, 200);
+        Color32 textColor = new Color32(209, 188, 83, 255);
+        adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.5f);
+        adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.5f);
     }
 
     // Close the ad watch panel
     public static void CloseAdWatchPanel()
     {
         adWatchPanel.SetActive(false);
+        adWatchPanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
+        adWatchPanel.transform.GetChild(0).GetComponent<Text>().color = new Color32(209, 188, 83, 0);
     }
 
     // Continue the game and watch an ad, when finished, clear the bottom 3 rows
