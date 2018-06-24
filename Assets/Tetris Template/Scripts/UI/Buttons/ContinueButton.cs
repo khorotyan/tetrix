@@ -8,5 +8,6 @@ public class ContinueButton : MonoBehaviour {
         Managers.Audio.PlayUIClick();
         Managers.Game.SetState(typeof(GamePlayState));
         GameController.CloseAdWatchPanel();
+        GameController.OnGameContinueClick();
     }
 }

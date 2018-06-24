@@ -22,10 +22,13 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
-        if (inputType == InputMethod.TouchInput)
-            TouchInput();
-        else
-            KeyboardInput();
+        if (GameController.isGamePaused == false)
+        {
+            if (inputType == InputMethod.TouchInput)
+                TouchInput();
+            else
+                KeyboardInput();
+        }
     }
 
     #region KEYBOARD

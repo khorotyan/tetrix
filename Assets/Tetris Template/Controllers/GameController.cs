@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     public static int NumberOfFails = 0;
     public static bool isGameOverUiActive = false;
     public static bool clearRowsAdWatched = false;
+    public static bool isGamePaused = false;
 
     private void Awake()
     {
@@ -116,6 +117,9 @@ public class GameController : MonoBehaviour
     {
         // Play an ad
         Managers.Adv.ShowRewardedAd();
+
+        // Unpause the game
+        isGamePaused = false;
     }
 
     public IEnumerator OnRewardAdFinish()
@@ -134,10 +138,22 @@ public class GameController : MonoBehaviour
     public static void OnGameRestartClick()
     {
         clearRowsAdWatched = false;
+        isGamePaused = false;
     }
 
     public static void OnHomeScreenClick()
     {
         clearRowsAdWatched = false;
+        isGamePaused = false;
+    }
+
+    public static void OnGameContinueClick()
+    {
+        isGamePaused = false;
+    }
+
+    public static void OnGamePauseClick()
+    {
+        isGamePaused = true;
     }
 }
