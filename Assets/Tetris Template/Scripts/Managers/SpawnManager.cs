@@ -14,6 +14,5 @@ public class SpawnManager : MonoBehaviour {
 		GameObject temp = Instantiate(shapeTypes[i]) ;
         Managers.Game.currentShape = temp.GetComponent<TetrisShape>();
         temp.transform.parent = Managers.Game.blockHolder;
-        Managers.Input.isActive = true;
     }
 }

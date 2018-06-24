@@ -10,32 +10,28 @@ public enum InputMethod
 
 public class PlayerInputManager : MonoBehaviour
 {
-    public bool isActive;
     public InputMethod inputType;
 
     void Awake()
     {
         if (Application.platform == RuntimePlatform.Android)
             inputType = InputMethod.TouchInput;
+        else
+            inputType = InputMethod.KeyboardInput;
     }
 
-    void Update()
+    private void Update()
     {
-        if (isActive)
-        {
-            if (inputType == InputMethod.KeyboardInput)
-                KeyboardInput();
-            else if (inputType == InputMethod.MouseInput)
-                MouseInput();
-            else if (inputType == InputMethod.TouchInput)
-                TouchInput();
-        }
+        if (inputType == InputMethod.TouchInput)
+            TouchInput();
+        else
+            KeyboardInput();
     }
 
     #region KEYBOARD
     void KeyboardInput()
     {
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.A))
             Managers.Game.currentShape.movementController.RotateClockWise(false);
         else if (Input.GetKeyDown(KeyCode.D))
             Managers.Game.currentShape.movementController.RotateClockWise(true);
@@ -48,8 +44,14 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (Managers.Game.currentShape != null)
             {
-                isActive = false;
                 Managers.Game.currentShape.movementController.InstantFall();
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (Managers.Game.currentShape != null)
+            {
+                Managers.Game.currentShape.movementController.StopInstantFall();
             }
         }
     }
@@ -85,22 +87,21 @@ public class PlayerInputManager : MonoBehaviour
                 _currentSwipe.Normalize();
 
                 //swipe left
-                if (_currentSwipe.x < 0 && _currentSwipe.y > -0.45f && _currentSwipe.y < 0.45f)
+                if (_currentSwipe.x < 0 && _currentSwipe.y > -0.5f && _currentSwipe.y < 0.5f)
                 {
                     Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.left);
                 }
                 //swipe right
-                if (_currentSwipe.x > 0 && _currentSwipe.y > -0.45f && _currentSwipe.y < 0.45f)
+                if (_currentSwipe.x > 0 && _currentSwipe.y > -0.5f && _currentSwipe.y < 0.5f)
                 {
                     Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.right);
                 }
 
                 //swipe down
-                if (_currentSwipe.y < 0 && _currentSwipe.x > -0.85f && _currentSwipe.x < 0.85f)
+                if (_currentSwipe.y < 0 && _currentSwipe.x > -0.5f && _currentSwipe.x < 0.5f)
                 {
                     if (Managers.Game.currentShape != null)
                     {
-                        isActive = false;
                         Managers.Game.currentShape.movementController.InstantFall();
                     }
                 }
@@ -146,23 +147,29 @@ public class PlayerInputManager : MonoBehaviour
                     _currentSwipe.Normalize();
 
                     //swipe left
-                    if (_currentSwipe.x < 0 && _currentSwipe.y > -0.5f && _currentSwipe.y < 0.5f)
+                    if (_currentSwipe.x < 0 && _currentSwipe.y > -0.35f && _currentSwipe.y < 0.35f)
                     {
                         Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.left);
                     }
                     //swipe right
-                    if (_currentSwipe.x > 0 && _currentSwipe.y > -0.5f && _currentSwipe.y < 0.5f)
+                    if (_currentSwipe.x > 0 && _currentSwipe.y > -0.35f && _currentSwipe.y < 0.35f)
                     {
                         Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.right);
                     }
-
                     //swipe down
-                    if (_currentSwipe.y < 0 && _currentSwipe.x > -0.5f && _currentSwipe.x < 0.5f)
+                    if (_currentSwipe.y < 0 && _currentSwipe.x > -0.35f && _currentSwipe.x < 0.35f)
                     {
                         if (Managers.Game.currentShape != null)
                         {
-                            isActive = false;
                             Managers.Game.currentShape.movementController.InstantFall();
+                        }
+                    }
+                    //swipe up
+                    if (_currentSwipe.y > 0 && _currentSwipe.x > -0.35f && _currentSwipe.x < 0.35f)
+                    {
+                        if (Managers.Game.currentShape != null)
+                        {
+                            Managers.Game.currentShape.movementController.StopInstantFall();
                         }
                     }
                 }

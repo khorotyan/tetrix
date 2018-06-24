@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPivot: {fileID: 4000013048453682}
   transitionInterval: 0.8
-  fastTransitionInterval: 0.05
+  fastTransitionInterval: 0.1
 --- !u!212 &212000010724532106
 SpriteRenderer:
   m_ObjectHideFlags: 1

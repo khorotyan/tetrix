@@ -5,8 +5,14 @@ public class ShapeMovementController : MonoBehaviour {
 
     public Transform rotationPivot;
     public float transitionInterval = 0.8f;
-    public float fastTransitionInterval ;
+    public float fastTransitionInterval;
     private float lastFall = 0;
+    private float defaultTransitionInterval;
+
+    private void Awake()
+    {
+        defaultTransitionInterval = transitionInterval;
+    }
 
     public void ShapeUpdate()
     {
@@ -83,5 +89,10 @@ public class ShapeMovementController : MonoBehaviour {
     public void InstantFall()
     {
         transitionInterval = fastTransitionInterval;
+    }
+    
+    public void StopInstantFall()
+    {
+        transitionInterval = defaultTransitionInterval;
     }
 }
