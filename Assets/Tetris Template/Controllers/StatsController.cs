@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StatsController : MonoBehaviour
 {
@@ -40,6 +39,11 @@ public class StatsController : MonoBehaviour
         PlayerPrefs.SetInt(TOTAL_SCORE_KEY, totalScore);
         PlayerPrefs.SetFloat(TIME_SPENT_KEY, timeSpent);
         PlayerPrefs.SetInt(NUMBER_OF_GAMES_KEY, numberOfGames);
+    }
+
+    public void OnLeaderboardClick()
+    {
+        PlayGamesController.ShowLeaderboardUI();
     }
 
     private void OnApplicationPause(bool pause)

@@ -11,9 +11,9 @@ public class GameOverState : _StatesBase {
         StatsController.Instance.numberOfGames++;
         Managers.UI.popUps.ActivateGameOverPopUp();
         Managers.Audio.PlayLoseSound();
-       
-        //Debug.Log ("<color=green>Game Over State</color> OnActive");	
-	}
+        // Update the PlayGames highscore
+        PlayGamesController.AddScoreToLeaderboard(GPGSIds.leaderboard_highscore, StatsController.Instance.highScore);
+    }
 
 	public override void OnDeactivate ()
     {

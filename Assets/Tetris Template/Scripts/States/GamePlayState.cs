@@ -13,19 +13,22 @@ public class GamePlayState : _StatesBase {
 
         gamePlayDuration = Time.time;
         Managers.Cam.ZoomIn();
-        //Debug.Log ("<color=green>Gameplay State</color> OnActive");	
+
+        if (GameController.Instance.isGamepadActive)
+            GameController.Instance.controllsPanel.SetActive(true);
 	}
 	public override void OnDeactivate ()
 	{
         StatsController.Instance.timeSpent += Time.time - gamePlayDuration;
-		//Debug.Log ("<color=red>Gameplay State</color> OnDeactivate");
-	}
+
+        if (GameController.Instance.isGamepadActive)
+            GameController.Instance.controllsPanel.SetActive(false);
+    }
 
 	public override void OnUpdate ()
 	{
-        if(Managers.Game.currentShape!=null)
+        if (Managers.Game.currentShape!=null)
             Managers.Game.currentShape.movementController.ShapeUpdate();
-		//Debug.Log ("<color=yellow>Gameplay State</color> OnUpdate");
 	}
 	#endregion
 

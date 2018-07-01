@@ -138,41 +138,44 @@ public class PlayerInputManager : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Ended)
             {
-                if (Time.time - _buttonDownPhaseStart > tapInterval)
+                if (GameController.Instance.isGamepadActive == false)
                 {
-                    //save ended touch 2d point
-                    _endPressPosition = new Vector2(touch.position.x, touch.position.y);
-
-                    //create vector from the two points
-                    _currentSwipe = new Vector2(_endPressPosition.x - _startPressPosition.x, _endPressPosition.y - _startPressPosition.y);
-
-                    //normalize the 2d vector
-                    _currentSwipe.Normalize();
-
-                    //swipe left
-                    if (_currentSwipe.x < 0 && _currentSwipe.y > -0.35f && _currentSwipe.y < 0.35f)
+                    if (Time.time - _buttonDownPhaseStart > tapInterval)
                     {
-                        Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.left);
-                    }
-                    //swipe right
-                    if (_currentSwipe.x > 0 && _currentSwipe.y > -0.35f && _currentSwipe.y < 0.35f)
-                    {
-                        Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.right);
-                    }
-                    //swipe down
-                    if (_currentSwipe.y < 0 && _currentSwipe.x > -0.35f && _currentSwipe.x < 0.35f)
-                    {
-                        if (Managers.Game.currentShape != null)
+                        //save ended touch 2d point
+                        _endPressPosition = new Vector2(touch.position.x, touch.position.y);
+
+                        //create vector from the two points
+                        _currentSwipe = new Vector2(_endPressPosition.x - _startPressPosition.x, _endPressPosition.y - _startPressPosition.y);
+
+                        //normalize the 2d vector
+                        _currentSwipe.Normalize();
+
+                        //swipe left
+                        if (_currentSwipe.x < 0 && _currentSwipe.y > -0.85f && _currentSwipe.y < 0.85f)
                         {
-                            Managers.Game.currentShape.movementController.InstantFall();
+                            Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.left);
                         }
-                    }
-                    //swipe up
-                    if (_currentSwipe.y > 0 && _currentSwipe.x > -0.35f && _currentSwipe.x < 0.35f)
-                    {
-                        if (Managers.Game.currentShape != null)
+                        //swipe right
+                        if (_currentSwipe.x > 0 && _currentSwipe.y > -0.85f && _currentSwipe.y < 0.85f)
                         {
-                            Managers.Game.currentShape.movementController.StopInstantFall();
+                            Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.right);
+                        }
+                        //swipe down
+                        if (_currentSwipe.y < 0 && _currentSwipe.x > -0.85f && _currentSwipe.x < 0.85f)
+                        {
+                            if (Managers.Game.currentShape != null)
+                            {
+                                Managers.Game.currentShape.movementController.InstantFall();
+                            }
+                        }
+                        //swipe up
+                        if (_currentSwipe.y > 0 && _currentSwipe.x > -0.85f && _currentSwipe.x < 0.85f)
+                        {
+                            if (Managers.Game.currentShape != null)
+                            {
+                                Managers.Game.currentShape.movementController.StopInstantFall();
+                            }
                         }
                     }
                 }

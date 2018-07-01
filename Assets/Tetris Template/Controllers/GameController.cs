@@ -9,20 +9,52 @@ using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance;
+
     public Transform blockHolder;
     public GameObject adWatchPanelCopy;
     public static GameObject adWatchPanel;
+    public GameObject controllsPanel;
+    public GameObject gamepadStatusObj;
 
     public static int NumberOfFails = 0;
     public static bool isGameOverUiActive = false;
     public static bool clearRowsAdWatched = false;
     public static bool isGamePaused = false;
 
+    public const string GAMEPAD_ACTIVE_KEY = "GamepadActive";
+    public bool isGamepadActive = false;
+
     private void Awake()
     {
+        Instance = this;
+
+        LoadPreferences();
+
         adWatchPanel = adWatchPanelCopy;
 
         adWatchPanel.GetComponent<Button>().onClick.AddListener(delegate { WatchAdAndGetReward(); });
+    }
+
+    private void LoadPreferences()
+    {
+        isGamepadActive = PlayerPrefs.GetInt(GAMEPAD_ACTIVE_KEY, 0) == 1;
+        ShowOrHideGamepadSelection();
+    }
+
+    public void OnGameControllerChange()
+    {
+        isGamepadActive = !isGamepadActive;
+        ShowOrHideGamepadSelection();
+        PlayerPrefs.SetInt(GAMEPAD_ACTIVE_KEY, isGamepadActive ? 1 : 0);
+    }
+
+    private void ShowOrHideGamepadSelection()
+    {
+        if (isGamepadActive == true)
+            gamepadStatusObj.SetActive(false);
+        else
+            gamepadStatusObj.SetActive(true);
     }
 
     private IEnumerator ClearLines()
@@ -134,6 +166,34 @@ public class GameController : MonoBehaviour
         // Clear the bottom 3 lines
         StartCoroutine(ClearLines());
     }
+
+    #region Gamepad Controlls
+    public void OnLeftArrowClick()
+    {
+        Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.left);
+    }
+
+    public void OnRightArrowClick()
+    {
+        Managers.Game.currentShape.movementController.MoveHorizontal(Vector2.right);
+    }
+
+    public void OnDownArrowClick()
+    {
+        if (Managers.Game.currentShape != null)
+        {
+            Managers.Game.currentShape.movementController.InstantFall();
+        }
+    }
+
+    public void OnUpArrowClick()
+    {
+        if (Managers.Game.currentShape != null)
+        {
+            Managers.Game.currentShape.movementController.StopInstantFall();
+        }
+    }
+    #endregion /Gamepad Controlls
 
     public static void OnGameRestartClick()
     {
