@@ -5,7 +5,6 @@ public class GameManager : MonoBehaviour
 	public bool isGameActive;
     public TetrisShape currentShape;
     public Transform blockHolder;
-    public PlayerStats stats;
 
     void Awake()
 	{

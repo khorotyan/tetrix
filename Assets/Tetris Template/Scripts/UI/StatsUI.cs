@@ -11,7 +11,7 @@ public class StatsUI : MonoBehaviour {
 
     public void ClearStats()
     {
-        Managers.Game.stats.ClearStats();
+        //StatsController.Instance.ClearStats();
         RefreshText();
     }
 
@@ -22,10 +22,10 @@ public class StatsUI : MonoBehaviour {
 
     void RefreshText()
     {
-        highScore.text = Managers.Game.stats.highScore.ToString();
-        totalScore.text = Managers.Game.stats.totalScore.ToString();
-        timeSpent.text = TimeUtil.SecondsToHMS(Managers.Game.stats.timeSpent);
-        numberOfGames.text = Managers.Game.stats.numberOfGames.ToString();
+        highScore.text = StatsController.Instance.highScore.ToString();
+        totalScore.text = StatsController.Instance.totalScore.ToString();
+        timeSpent.text = TimeUtil.SecondsToHMS(StatsController.Instance.timeSpent);
+        numberOfGames.text = StatsController.Instance.numberOfGames.ToString();
     }
 
 }

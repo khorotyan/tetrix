@@ -17,7 +17,7 @@ public class GamePlayState : _StatesBase {
 	}
 	public override void OnDeactivate ()
 	{
-        Managers.Game.stats.timeSpent += Time.time - gamePlayDuration;
+        StatsController.Instance.timeSpent += Time.time - gamePlayDuration;
 		//Debug.Log ("<color=red>Gameplay State</color> OnDeactivate");
 	}
 

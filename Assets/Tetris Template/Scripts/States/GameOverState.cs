@@ -7,8 +7,8 @@ public class GameOverState : _StatesBase {
 	public override void OnActivate ()
 	{
         Managers.Game.isGameActive = false;
-        Managers.Game.stats.highScore = Managers.Score.currentScore;
-        Managers.Game.stats.numberOfGames++;
+        StatsController.Instance.highScore = Managers.Score.currentScore;
+        StatsController.Instance.numberOfGames++;
         Managers.UI.popUps.ActivateGameOverPopUp();
         Managers.Audio.PlayLoseSound();
        

@@ -8,9 +8,9 @@ public class ScoreManager : MonoBehaviour {
 
     void Awake()
     {
-        if (Managers.Game.stats.highScore != 0)
+        if (StatsController.Instance.highScore != 0)
         {
-            highScore = Managers.Game.stats.highScore;
+            highScore = StatsController.Instance.highScore;
             Managers.UI.inGameUI.UpdateScoreUI();
         }
         else
@@ -25,7 +25,7 @@ public class ScoreManager : MonoBehaviour {
 		currentScore += scoreIncreaseAmount;
         CheckHighScore();
         Managers.UI.inGameUI.UpdateScoreUI();
-        Managers.Game.stats.totalScore += scoreIncreaseAmount;
+        StatsController.Instance.totalScore += scoreIncreaseAmount;
     }
 
     public void CheckHighScore()
@@ -40,8 +40,8 @@ public class ScoreManager : MonoBehaviour {
     {
         currentScore = 0;
 
-        if (Managers.Game.stats.highScore > highScore)
-            highScore = Managers.Game.stats.highScore;
+        if (StatsController.Instance.highScore > highScore)
+            highScore = StatsController.Instance.highScore;
 
         Managers.UI.inGameUI.UpdateScoreUI();
     }
