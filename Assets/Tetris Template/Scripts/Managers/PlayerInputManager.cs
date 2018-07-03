@@ -25,9 +25,21 @@ public class PlayerInputManager : MonoBehaviour
         if (GameController.isGamePaused == false)
         {
             if (inputType == InputMethod.TouchInput)
-                TouchInput();
+            {
+                if (GameController.Instance.isGamepadActive == false)
+                {
+                    TouchInput();
+                }
+                else
+                {
+                    ManageTouchRotation();
+                }
+            }     
             else
+            {
+                ManageTouchRotation();
                 KeyboardInput();
+            }
         }
     }
 
@@ -138,8 +150,7 @@ public class PlayerInputManager : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Ended)
             {
-                if (GameController.Instance.isGamepadActive == false)
-                {
+                
                     if (Time.time - _buttonDownPhaseStart > tapInterval)
                     {
                         //save ended touch 2d point
@@ -177,7 +188,6 @@ public class PlayerInputManager : MonoBehaviour
                                 Managers.Game.currentShape.movementController.StopInstantFall();
                             }
                         }
-                    }
                 }
                 else /*if (_currentSwipe.x + _currentSwipe.y< 0.5f */
                 {
@@ -189,6 +199,17 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
 
+    }
+
+    private void ManageTouchRotation()
+    {
+        if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > Screen.height / 6 && Input.mousePosition.y < Screen.height * 0.9)
+        {
+            if (Input.mousePosition.x < Screen.width / 2)
+                Managers.Game.currentShape.movementController.RotateClockWise(false);
+            else
+                Managers.Game.currentShape.movementController.RotateClockWise(true);
+        }
     }
     #endregion
 
