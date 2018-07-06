@@ -130,7 +130,7 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
             adWatchPanel.SetActive(true);
             Color32 buttonColor = new Color32(255, 255, 255, 200);
-            Color32 textColor = new Color32(209, 188, 83, 255);
+            Color32 textColor = new Color32(237, 149, 74, 255);
             adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.5f);
             adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.5f);
         }
@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour
     {
         adWatchPanel.SetActive(false);
         adWatchPanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-        adWatchPanel.transform.GetChild(0).GetComponent<Text>().color = new Color32(209, 188, 83, 0);
+        adWatchPanel.transform.GetChild(0).GetComponent<Text>().color = new Color32(237, 149, 74, 0);
     }
 
     // Continue the game and watch an ad, when finished, clear the bottom 3 rows

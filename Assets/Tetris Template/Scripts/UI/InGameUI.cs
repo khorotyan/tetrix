@@ -20,10 +20,10 @@ public class InGameUI : MonoBehaviour {
 
     public void InGameUIStartAnimation()
     {
-        scoreLabel.rectTransform.DOAnchorPosY(-334 + 60, 1, true);
-        highScoreLabel.rectTransform.DOAnchorPosY(-334 + 60, 1, true);
-        score.rectTransform.DOAnchorPosY(-375 + 60, 1, true);
-        highScore.rectTransform.DOAnchorPosY(-375 + 60, 1, true);
+        scoreLabel.rectTransform.DOAnchorPosY(-129, 1, true);
+        highScoreLabel.rectTransform.DOAnchorPosY(-129, 1, true);
+        score.rectTransform.DOAnchorPosY(-175, 1, true);
+        highScore.rectTransform.DOAnchorPosY(-175, 1, true);
     }
 
     public void InGameUIEndAnimation()

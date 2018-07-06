@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour
     public void MainMenuStartAnimation()
     {
         menuButtons.GetComponent<RectTransform>().DOAnchorPosY(-825, 1, true);
-        tetrisLogoText.GetComponent<RectTransform>().DOAnchorPosY(700, 1, true);
+        tetrisLogoText.GetComponent<RectTransform>().DOAnchorPosY(725, 1, true);
     }
 
     public void MainMenuEndAnimation()

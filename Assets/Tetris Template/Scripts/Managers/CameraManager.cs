@@ -6,7 +6,7 @@ public class CameraManager : MonoBehaviour {
 
 	public Camera main;
 
-    private float _mainMenuSize = 13.5f;
+    private float _mainMenuSize = 12.5f;
     private float _inGameSize = 11f;
 
     [HideInInspector]
