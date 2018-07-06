@@ -7,12 +7,15 @@ public class GameOverState : _StatesBase {
 	public override void OnActivate ()
 	{
         Managers.Game.isGameActive = false;
-        StatsController.Instance.highScore = Managers.Score.currentScore;
+
+        if (Managers.Score.currentScore > StatsController.Instance.highScore)
+            StatsController.Instance.highScore = Managers.Score.currentScore;
+
         StatsController.Instance.numberOfGames++;
         Managers.UI.popUps.ActivateGameOverPopUp();
         Managers.Audio.PlayLoseSound();
         // Update the PlayGames highscore
-        PlayGamesController.AddScoreToLeaderboard(GPGSIds.leaderboard_highscore, StatsController.Instance.highScore);
+        PlayGamesController.AddScoreToLeaderboard(GPGSIds.leaderboard_highscores, StatsController.Instance.highScore);
     }
 
 	public override void OnDeactivate ()
