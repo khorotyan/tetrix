@@ -7,7 +7,8 @@ public class GameBackButton : MonoBehaviour {
 	{
         Managers.Audio.PlayUIClick();
         Managers.Game.SetState(typeof(MenuState));
-        StartCoroutine(GameController.ShowAdPanel());
+        if (!(Application.internetReachability == NetworkReachability.NotReachable))
+            StartCoroutine(GameController.ShowAdPanel());
         GameController.OnGamePauseClick();
     }
 }

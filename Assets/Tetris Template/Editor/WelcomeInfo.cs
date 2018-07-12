@@ -43,7 +43,6 @@ public class WelcomeInfo : EditorWindow
 		GetWindow<WelcomeInfo>(true);
 	}
 
-
 	static WelcomeInfo(){
 		EditorApplication.playmodeStateChanged -= OnPlayModeChanged;
 		EditorApplication.playmodeStateChanged += OnPlayModeChanged;

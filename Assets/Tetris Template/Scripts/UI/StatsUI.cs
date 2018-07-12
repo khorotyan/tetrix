@@ -8,6 +8,7 @@ public class StatsUI : MonoBehaviour {
     public Text totalScore;
     public Text timeSpent;
     public Text numberOfGames;
+    public Text averageScore;
 
     public void ClearStats()
     {
@@ -26,6 +27,7 @@ public class StatsUI : MonoBehaviour {
         totalScore.text = StatsController.Instance.totalScore.ToString();
         timeSpent.text = TimeUtil.SecondsToHMS(StatsController.Instance.timeSpent);
         numberOfGames.text = StatsController.Instance.numberOfGames.ToString();
+        averageScore.text = (StatsController.Instance.totalScore / StatsController.Instance.numberOfGames).ToString();
     }
 
 }

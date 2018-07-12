@@ -30,6 +30,7 @@ public class GridManager : MonoBehaviour
         {
             if (IsRowFull(y))
             {
+                Debug.Log(111111);
                 DeleteRow(y);
                 DecreaseRowsAbove(y + 1);
                 --y;

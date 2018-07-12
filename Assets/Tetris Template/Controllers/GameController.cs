@@ -15,15 +15,20 @@ public class GameController : MonoBehaviour
     public GameObject adWatchPanelCopy;
     public static GameObject adWatchPanel;
     public GameObject controllsPanel;
-    public GameObject gamepadStatusObj;
+    public GameObject gamepadCross;
+    public GameObject soundCross;
 
     public static int NumberOfFails = 0;
     public static bool isGameOverUiActive = false;
     public static bool clearRowsAdWatched = false;
-    public static bool isGamePaused = false;
+    public static bool isGamePaused = true;
+    public static int comboNum = 0;
 
     public const string GAMEPAD_ACTIVE_KEY = "GamepadActive";
+    public const string SOUND_ACTIVE_KEY = "SoundActive";
     public bool isGamepadActive = false;
+
+    public System.Random random = new System.Random();
 
     private void Awake()
     {
@@ -40,6 +45,12 @@ public class GameController : MonoBehaviour
     {
         isGamepadActive = PlayerPrefs.GetInt(GAMEPAD_ACTIVE_KEY, 0) == 1;
         ShowOrHideGamepadSelection();
+        bool soundActive = PlayerPrefs.GetInt(SOUND_ACTIVE_KEY, 0) == 1;
+        if (!soundActive)
+        {
+            soundCross.SetActive(true);
+            AudioListener.volume = 0f;
+        }
     }
 
     public void OnGameControllerChange()
@@ -49,12 +60,17 @@ public class GameController : MonoBehaviour
         PlayerPrefs.SetInt(GAMEPAD_ACTIVE_KEY, isGamepadActive ? 1 : 0);
     }
 
+    public void OnSoundPreferenceChange(bool isActive)
+    {
+        PlayerPrefs.SetInt(SOUND_ACTIVE_KEY, isActive ? 1 : 0);
+    }
+
     private void ShowOrHideGamepadSelection()
     {
         if (isGamepadActive == true)
-            gamepadStatusObj.SetActive(false);
+            gamepadCross.SetActive(false);
         else
-            gamepadStatusObj.SetActive(true);
+            gamepadCross.SetActive(true);
     }
 
     private IEnumerator ClearLines()
@@ -129,10 +145,10 @@ public class GameController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.15f);
             adWatchPanel.SetActive(true);
-            Color32 buttonColor = new Color32(255, 255, 255, 200);
-            Color32 textColor = new Color32(237, 149, 74, 255);
-            adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.5f);
-            adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.5f);
+            Color32 buttonColor = new Color32(237, 149, 74, 255);
+            Color32 textColor = new Color32(255, 255, 255, 255);
+            adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.7f);
+            adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.7f);
         }
     }
 
@@ -140,8 +156,8 @@ public class GameController : MonoBehaviour
     public static void CloseAdWatchPanel()
     {
         adWatchPanel.SetActive(false);
-        adWatchPanel.GetComponent<Image>().color = new Color32(255, 255, 255, 0);
-        adWatchPanel.transform.GetChild(0).GetComponent<Text>().color = new Color32(237, 149, 74, 0);
+        adWatchPanel.GetComponent<Image>().color = new Color32(237, 149, 74, 0);
+        adWatchPanel.transform.GetChild(0).GetComponent<Text>().color = new Color32(255, 255, 255, 0);
     }
 
     // Continue the game and watch an ad, when finished, clear the bottom 3 rows
@@ -161,8 +177,8 @@ public class GameController : MonoBehaviour
         // Continue the game
         Managers.Game.SetState(typeof(GamePlayState));
         CloseAdWatchPanel();
+        Managers.Game.currentShape.movementController.StopInstantFall();
         yield return new WaitForSeconds(1f);
-
         // Clear the bottom 3 lines
         StartCoroutine(ClearLines());
     }
@@ -204,12 +220,20 @@ public class GameController : MonoBehaviour
     public static void OnHomeScreenClick()
     {
         clearRowsAdWatched = false;
-        isGamePaused = false;
+        isGamePaused = true;
     }
 
-    public static void OnGameContinueClick()
+    public void OnGameContinueClick()
     {
         isGamePaused = false;
+        StartCoroutine(StopInstantFallOnContinue());
+    }
+
+    private IEnumerator StopInstantFallOnContinue()
+    {
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.04f);
+        Managers.Game.currentShape.movementController.StopInstantFall();
     }
 
     public static void OnGamePauseClick()
