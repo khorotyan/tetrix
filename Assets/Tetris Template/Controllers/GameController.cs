@@ -18,15 +18,20 @@ public class GameController : MonoBehaviour
     public GameObject gamepadCross;
     public GameObject soundCross;
 
+    public GameObject bonusScoreObj;
+    private float bonusScorePosX = -175;
+
     public static int NumberOfFails = 0;
     public static bool isGameOverUiActive = false;
     public static bool clearRowsAdWatched = false;
     public static bool isGamePaused = true;
-    public static int comboNum = 0;
 
+    public static Color32 orangeNoAlpha = new Color32(237, 149, 74, 0);
+    public static Color32 orange = new Color32(237, 149, 74, 255);
     public const string GAMEPAD_ACTIVE_KEY = "GamepadActive";
     public const string SOUND_ACTIVE_KEY = "SoundActive";
     public bool isGamepadActive = false;
+    public int comboNum = 0;
 
     public System.Random random = new System.Random();
 
@@ -39,6 +44,14 @@ public class GameController : MonoBehaviour
         adWatchPanel = adWatchPanelCopy;
 
         adWatchPanel.GetComponent<Button>().onClick.AddListener(delegate { WatchAdAndGetReward(); });
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartCoroutine(Instance.IncreaseCombo());
+        }
     }
 
     private void LoadPreferences()
@@ -145,9 +158,8 @@ public class GameController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.15f);
             adWatchPanel.SetActive(true);
-            Color32 buttonColor = new Color32(237, 149, 74, 255);
             Color32 textColor = new Color32(255, 255, 255, 255);
-            adWatchPanel.GetComponent<Image>().DOColor(buttonColor, 0.7f);
+            adWatchPanel.GetComponent<Image>().DOColor(orange, 0.7f);
             adWatchPanel.transform.GetChild(0).GetComponent<Text>().DOColor(textColor, 0.7f);
         }
     }
@@ -240,4 +252,77 @@ public class GameController : MonoBehaviour
     {
         isGamePaused = true;
     }
+
+    #region Manage Combos
+
+    public IEnumerator IncreaseCombo()
+    {
+        comboNum++;
+
+        if (comboNum == 2)
+        {
+            bonusScoreObj.GetComponent<Text>().text = "+ 100";
+            ShowBonusScoreText();
+            AnimateAdditionalScoreText();
+        }
+        else if (comboNum > 2)
+        {
+            bonusScoreObj.GetComponent<Text>().text = "+ " + (comboNum - 1) * 100;
+            AnimateAdditionalScoreText();
+        }
+
+        int prevCombo = comboNum;
+
+        yield return new WaitForSeconds(1);
+
+        // If the combo remained the same during the wait time
+        //  then reset it
+        if (prevCombo == comboNum)
+        {
+            if (comboNum == 1)
+            {
+                comboNum = 0;
+                yield break;
+            }
+
+            int bonus = (comboNum - 1) * 100;
+
+            for (int i = bonus; i > 0; i-=25)
+            {
+                Managers.Score.OnScore(25);
+                bonusScoreObj.GetComponent<Text>().text = "+ " + (i - 25);
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            comboNum = 0;
+            HideBonusScoreText();
+        }
+    }
+
+    private void ShowBonusScoreText()
+    {
+        int scoreLen = StatsController.Instance.highScore.ToString().Length;
+        bonusScoreObj.GetComponent<RectTransform>().anchoredPosition =
+            new Vector3(bonusScorePosX + (scoreLen - 3) * 20, -175, 0);
+
+        bonusScoreObj.GetComponent<Text>().DOColor(orange, 0.3f).SetEase(Ease.InSine);
+    }
+
+    private void HideBonusScoreText()
+    {
+        bonusScoreObj.GetComponent<Text>().DOColor(orangeNoAlpha, 0.3f).SetEase(Ease.OutSine);
+    }
+
+    private void AnimateAdditionalScoreText()
+    {
+        bonusScoreObj.GetComponent<RectTransform>().DOScale(1.1f, 0.4f)
+            .OnComplete(delegate 
+            {
+                bonusScoreObj.GetComponent<RectTransform>().DOScale(1f, 0.4f)
+                .SetEase(Ease.OutSine);
+            })
+            .SetEase(Ease.InSine);
+    }
+
+    #endregion /Manage Combos
 }
